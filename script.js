@@ -1,7 +1,7 @@
 (function () {
   var reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
-  /* Nav: sombra al hacer scroll y enlace activo por sección */
+  /* Nav: shadow on scroll, active link per section */
   var nav = document.querySelector('.nav');
   var onScroll = function () { nav.classList.toggle('scrolled', window.scrollY > 8); };
   window.addEventListener('scroll', onScroll, { passive: true }); onScroll();
@@ -18,7 +18,7 @@
     sections.forEach(function (s) { spy.observe(s); });
   }
 
-  /* Revelado por scroll, escalonado entre hermanos */
+  /* Scroll reveal, staggered between siblings */
   var items = Array.prototype.slice.call(document.querySelectorAll('[data-reveal]'));
   if (reduce || !('IntersectionObserver' in window)) {
     items.forEach(function (el) { el.classList.add('in'); });
@@ -36,7 +36,7 @@
     items.forEach(function (el) { io.observe(el); });
   }
 
-  /* Desplegables con altura animada */
+  /* Disclosures with animated height */
   document.querySelectorAll('details').forEach(function (d) {
     var s = d.querySelector('summary');
     var body = document.createElement('div');
@@ -77,27 +77,7 @@
     });
   });
 
-  /* Hero: frases de manual que rotan */
-  var sp = document.querySelector('.specimen');
-  if (sp && !reduce) {
-    var lines = [
-      ['"I\'m only telling you this because I care about you."', 'Tactic 07 · Concern as leverage'],
-      ['"After everything I\'ve done for you."', 'Tactic 12 · The invoice'],
-      ['"You\'re too smart to fall for something like that."', 'Tactic 19 · Flattery as a blindfold'],
-      ['"I never said that. You\'re remembering it wrong."', 'Tactic 03 · Rewriting the record'],
-      ['"It\'s fine. Do whatever you want."', 'Tactic 24 · The withdrawn permission']
-    ];
-    var q = sp.querySelector('.specimen-q'), t = sp.querySelector('.specimen-t'), k = 0;
-    setInterval(function () {
-      sp.classList.add('fade');
-      setTimeout(function () {
-        k = (k + 1) % lines.length; q.textContent = lines[k][0]; t.textContent = lines[k][1];
-        sp.classList.remove('fade');
-      }, 650);
-    }, 5200);
-  }
-
-  /* Tarjetas: el brillo sigue al ratón */
+  /* Cards: the glow follows the cursor */
   if (!reduce && window.matchMedia('(hover: hover)').matches) {
     document.querySelectorAll('.card').forEach(function (c) {
       c.addEventListener('mousemove', function (e) {
